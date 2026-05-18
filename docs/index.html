@@ -3,85 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>github-pages-qa • Documentation</title>
+  <title>github-pages-qa — Live Q&A Forum</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
-<body class="bg-zinc-950 text-zinc-200">
-  <div class="max-w-5xl mx-auto px-8 py-12">
-    <header class="mb-12">
-      <h1 class="text-5xl font-semibold tracking-tight">github-pages-qa</h1>
-      <p class="text-zinc-400 mt-2">Auto-generated documentation site with live Q&A</p>
+<body class="bg-[#0a0a0f] text-zinc-300 font-['Inter'] min-h-screen">
+  <!-- Background grain/noise overlay -->
+  <div class="fixed inset-0 opacity-[0.03] pointer-events-none" style="background-image:url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E');"></div>
+
+  <div class="relative max-w-4xl mx-auto px-6 py-16">
+    <!-- Header -->
+    <header class="mb-16 text-center">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        LIVE FORUM
+      </div>
+      <h1 class="font-['Space_Grotesk'] text-6xl font-bold text-white tracking-tight mb-4">github-pages-qa</h1>
+      <p class="text-zinc-500 text-lg max-w-xl mx-auto">A public space for questions, answers, and ongoing research threads. Curated from live sessions.</p>
     </header>
 
-    <div class="prose prose-invert max-w-none mb-16">
-      <div id="readme-rendered"></div>
-      <div id="readme-raw" style="display:none"># github-pages-qa
-
-A reusable **Hermes Skill** that turns any GitHub repository into a clean, living documentation site with a **two-way synced Q&amp;A panel**.
-
-## What it does
-
-- Auto-generates a modern GitHub Pages site from your `README.md` + `docs/` folder
-- Maintains a version-controlled `qa.json` as the single source of truth for research Q&amp;A
-- Enables **two-way sync**:
-  - Chat → Site: New valuable exchanges from Hermes sessions are synced to the live site
-  - Site → Chat: Visitors can suggest questions that become GitHub issues for review
-- Can spawn dedicated Q&amp;A maintenance Hermes sessions using the free Nous model
-
-## Installation
-
-```bash
-# Clone the skill
-git clone https://github.com/Ash-Blanc/github-pages-qa.git ~/.hermes/skills/github-pages-qa
-```
-
-## Usage
-
-### Via Hermes
-```bash
-hermes skill run github-pages-qa init --repo &quot;My Project&quot;
-hermes skill run github-pages-qa sync --pairs &#x27;[{&quot;q&quot;: &quot;...&quot;, &quot;a&quot;: &quot;...&quot;}]&#x27;
-hermes skill run github-pages-qa start-qa-session
-```
-
-### Standalone CLI
-```bash
-python cli.py init --repo &quot;My Project&quot;
-python cli.py sync --pairs &#x27;[{&quot;q&quot;:&quot;...&quot;,&quot;a&quot;:&quot;...&quot;}]&#x27;
-python cli.py suggest &quot;How does the IR work?&quot;
-python cli.py start-qa-session
-```
-
-## Two-Way Sync Flow
-
-1. During research sessions, important Q&amp;A is collected
-2. `sync` command updates `qa.json` and auto-commits + pushes
-3. The live site displays the Q&amp;A panel (powered by `qa.json`)
-4. Visitors can suggest new questions via the site
-5. Suggestions are converted into GitHub issues for e</div>
-      <div id="docs-rendered"></div>
-      <div id="docs-raw" style="display:none"></div>
+    <!-- Stats bar -->
+    <div class="grid grid-cols-3 gap-4 mb-12">
+      <div class="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 text-center">
+        <div class="font-['Space_Grotesk'] text-3xl font-bold text-white" id="qa-count">0</div>
+        <div class="text-xs text-zinc-500 mt-1 uppercase tracking-wider">Questions</div>
+      </div>
+      <div class="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 text-center">
+        <div class="font-['Space_Grotesk'] text-3xl font-bold text-emerald-400" id="answered-count">0</div>
+        <div class="text-xs text-zinc-500 mt-1 uppercase tracking-wider">Answered</div>
+      </div>
+      <div class="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 text-center">
+        <div class="font-['Space_Grotesk'] text-3xl font-bold text-violet-400">∞</div>
+        <div class="text-xs text-zinc-500 mt-1 uppercase tracking-wider">Open</div>
+      </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script>
-      document.getElementById('readme-rendered').innerHTML = marked.parse(document.getElementById('readme-raw').textContent);
-      document.getElementById('docs-rendered').innerHTML = marked.parse(document.getElementById('docs-raw').textContent);
-    </script>
+    <!-- Suggest CTA -->
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="font-['Space_Grotesk'] text-2xl font-semibold text-white">Threads</h2>
+      <button onclick="openModal()" class="group flex items-center gap-2 px-5 py-2.5 bg-white text-black rounded-xl font-semibold text-sm hover:bg-zinc-200 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+        Suggest Question
+      </button>
+    </div>
 
-    <div id="qa" class="mb-12">
-      <div class="flex justify-between items-end mb-6">
-        <div>
-          <h2 class="text-sm uppercase tracking-[3px] text-zinc-500">Research Q&amp;A</h2>
-          <p class="text-3xl font-semibold">Questions &amp; Answers</p>
-        </div>
-        <button onclick="showSuggestModal()" 
-                class="px-5 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-2xl text-sm transition-colors">
-          Suggest a question
-        </button>
+    <!-- Q&A Feed -->
+    <div id="qa-list" class="space-y-4"></div>
+
+    <!-- Footer -->
+    <footer class="mt-20 pt-8 border-t border-zinc-800 text-center text-zinc-600 text-sm">
+      <p>Synced live from Hermes sessions · <a href="https://github.com/Ash-Blanc/github-pages-qa" class="text-zinc-400 hover:text-white transition-colors">View on GitHub</a></p>
+    </footer>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50">
+    <div class="bg-zinc-900 border border-zinc-700 rounded-2xl p-8 max-w-md w-full mx-4">
+      <h3 class="font-['Space_Grotesk'] text-xl font-bold text-white mb-4">Suggest a Question</h3>
+      <p class="text-zinc-400 text-sm mb-4">Your question will be queued as a GitHub issue for the community to answer.</p>
+      <textarea id="suggest-input" class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-4 text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500/50 resize-none h-32" placeholder="What's on your mind?"></textarea>
+      <div class="flex gap-3 mt-4">
+        <button onclick="closeModal()" class="flex-1 py-2.5 border border-zinc-700 rounded-xl text-zinc-400 hover:text-white hover:border-zinc-500 transition-colors">Cancel</button>
+        <button onclick="submitSuggestion()" class="flex-1 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-black font-semibold rounded-xl transition-colors">Submit</button>
       </div>
-      <div id="qa-list" class="space-y-3"></div>
     </div>
   </div>
 
