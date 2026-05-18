@@ -1,6 +1,20 @@
 [
   {
     "q": "How does two-way sync work?",
-    "a": "Chat updates qa.json; site suggestions become GitHub issues."
+    "a": "Chat updates qa.json; site suggestions become GitHub issues. The forum polls for updates every 30 seconds.",
+    "tags": [
+      "sync",
+      "architecture"
+    ],
+    "date": "2026-05-18"
+  },
+  {
+    "q": "Can I use this for any repo?",
+    "a": "Yes. Run init, then sync. The forum auto-generates from your README and docs.",
+    "tags": [
+      "setup",
+      "general"
+    ],
+    "date": "2026-05-18"
   }
 ]
