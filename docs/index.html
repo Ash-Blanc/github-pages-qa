@@ -9,10 +9,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body class="bg-[#0a0a0f] text-zinc-300 font-['Inter'] min-h-screen">
-  <!-- Background grain/noise overlay -->
   <div class="fixed inset-0 opacity-[0.03] pointer-events-none" style="background-image:url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E');"></div>
 
-  <div class="relative max-w-4xl mx-auto px-6 py-16">
+  <div class="relative max-w-6xl mx-auto px-6 py-16">
     <!-- Header -->
     <header class="mb-16 text-center">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono mb-6">
@@ -24,10 +23,10 @@
     </header>
 
     <!-- Stats bar -->
-    <div class="grid grid-cols-3 gap-4 mb-12">
+    <div class="grid grid-cols-3 gap-4 mb-12 max-w-3xl mx-auto">
       <div class="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 text-center">
         <div class="font-['Space_Grotesk'] text-3xl font-bold text-white" id="qa-count">0</div>
-        <div class="text-xs text-zinc-500 mt-1 uppercase tracking-wider">Questions</div>
+        <div class="text-xs text-zinc-500 mt-1 uppercase tracking-wider">Threads</div>
       </div>
       <div class="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 text-center">
         <div class="font-['Space_Grotesk'] text-3xl font-bold text-emerald-400" id="answered-count">0</div>
@@ -39,17 +38,49 @@
       </div>
     </div>
 
-    <!-- Suggest CTA -->
-    <div class="flex items-center justify-between mb-8">
-      <h2 class="font-['Space_Grotesk'] text-2xl font-semibold text-white">Threads</h2>
-      <button onclick="openModal()" class="group flex items-center gap-2 px-5 py-2.5 bg-white text-black rounded-xl font-semibold text-sm hover:bg-zinc-200 transition-colors">
+    <!-- Filters + CTA -->
+    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-8">
+      <div class="flex-1 relative">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <input id="search-input" type="text" placeholder="Search threads..." class="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-600 transition-colors">
+      </div>
+      <select id="tag-filter" class="bg-zinc-900/50 border border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-400 focus:outline-none focus:border-zinc-600 cursor-pointer">
+        <option value="">All tags</option>
+      </select>
+      <button onclick="openModal()" class="flex items-center justify-center gap-2 px-5 py-2.5 bg-white text-black rounded-xl font-semibold text-sm hover:bg-zinc-200 transition-colors whitespace-nowrap">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-        Suggest Question
+        Suggest
       </button>
     </div>
 
-    <!-- Q&A Feed -->
-    <div id="qa-list" class="space-y-4"></div>
+    <!-- Two-column layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8">
+      <!-- Main feed -->
+      <div>
+        <div id="qa-list" class="space-y-4"></div>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="space-y-6">
+        <div class="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-5">
+          <h3 class="font-['Space_Grotesk'] text-sm font-semibold text-white uppercase tracking-wider mb-4">Pending Suggestions</h3>
+          <div id="pending-list" class="space-y-3">
+            <div class="animate-pulse space-y-3">
+              <div class="h-12 bg-zinc-800 rounded-xl"></div>
+              <div class="h-12 bg-zinc-800 rounded-xl"></div>
+            </div>
+          </div>
+          <a href="https://github.com/Ash-Blanc/github-pages-qa/issues?q=label:qa-suggestion" target="_blank" class="block mt-4 text-xs text-zinc-500 hover:text-emerald-400 transition-colors">View all on GitHub →</a>
+        </div>
+
+        <div class="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-5">
+          <h3 class="font-['Space_Grotesk'] text-sm font-semibold text-white uppercase tracking-wider mb-2">How it works</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed">
+            Threads are synced from live Hermes research sessions. Suggest a question — it becomes a GitHub issue. Answered threads get merged back here.
+          </p>
+        </div>
+      </aside>
+    </div>
 
     <!-- Footer -->
     <footer class="mt-20 pt-8 border-t border-zinc-800 text-center text-zinc-600 text-sm">
